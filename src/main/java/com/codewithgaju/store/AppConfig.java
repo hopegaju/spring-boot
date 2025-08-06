@@ -1,10 +1,13 @@
 package com.codewithgaju.store;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
+    @Value("${payment-gateway}")
+    private String paymentGateway;
     @Bean
     public PaymentService stripe(){
         return new StripePaymentService();
@@ -16,6 +19,10 @@ public class AppConfig {
     }
     @Bean
     public OrderService orderservice(){
-        return new OrderService(stripe());
+        if(paymentGateway.equalsIgnoreCase("stripe")){
+            return new OrderService(stripe());
+        }
+            return new OrderService(paypal());
+
     }
 }
