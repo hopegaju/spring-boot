@@ -7,3 +7,4 @@ stripe:
   enabled: true
   timeout: 1000
   supported-currencies: USD,EUR,GBP,RWF
+payment-gateway: stripe
